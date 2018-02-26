@@ -8,9 +8,9 @@ def f_model_1(z_list,A,c):
     functionsum=0
     for i in range(len(z_list)):    #length m
         if z_list[i][0]>0:
-            functionsum+=compute_r_i(z_list[i],A,c,i)**2
+            functionsum+=compute_r_i_1(z_list[i],A,c,i)**2
         else:
-            functionsum+=(compute_r_i(z_list[i],A,c,i))**2
+            functionsum+=(compute_r_i_1(z_list[i],A,c,i))**2
     return functionsum
 
 def compute_r_i_1(z_list_i,A,c,i):
@@ -64,10 +64,23 @@ def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=
         for j in range(n):
             for h in range(n):
                 if h==j:
-                    dfx[int(n*(n+1)/2)+j]+=-2*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*2*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
                 else:
-                    dfx[int(n*(n+1)/2)+j]+=-A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
     return dfx
 
+if __name__ == "__main__":
+    n = 6  # dimensions
+    m = 3  # number of z points
+    x = np.ones(n)
+    z_list = np.zeros(m)
+    for i in range(m):
+        z_list[i] = np.ones(n + 1) * i
+        if i < int(m / 2):
+            z_list[i][0] = -1
+        else:
+            z_list[i][0] = 1
 
-
+    # m=3 gir to -1 og en 1
+    A, c = construct_A_and_C(n, x)
+    f_model_1(z_list)

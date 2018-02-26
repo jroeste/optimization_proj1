@@ -30,7 +30,7 @@ if __name__=='__main__':
     print(p)
     print(g)
     # compare directional derivative with finite differences
-    for ep in 10.0**np.arange(-1,-13,-1):
+    for ep in 10.0**np.arange(-1,-20,-1):
         g_app = (f(x+ep*p)-f0)/ep
         error = abs(g_app-g)/abs(g)
         print('ep = %e, error = %e' % (ep,error))
