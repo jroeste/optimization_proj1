@@ -21,11 +21,12 @@ def backtrackingLinesearch(f, df, z_list, n, p, x): # Satisfies sufficient decre
         # Her oppretter vi matrise på nytt hver gang... Må vi det?
         #if f(x + alpha*p) <= f(z_list, x) + c1*alpha*df(x)*p:
         print("f", f(z_list, A, c))
-        print("f0 + c1 * alpha * df(z_list, n, A, b, c) * p", f0 + c1 * alpha * df(z_list, n, A, b, c) * p
-        if f(z_list, A, c) <= f0 + c1 * alpha * df(z_list, n, A, b, c) * p:
-            return alpha
-        else:
-            alpha = rho * alpha
+        print("f0 + c1 * alpha * df(z_list, n, A, b, c) * p", f0 + c1 * alpha * df(z_list, n, A, b, c) * p)
+        return alpha
+#        if f(z_list, A, c) <= f0 + c1 * alpha * df(z_list, n, A, b, c) * p:
+#            return alpha
+#        else:
+#            alpha = rho * alpha
 
 # kan evt lage en core linesearch method som motor inne i funksjoner steepest descent, newton etc for å finne p
 
