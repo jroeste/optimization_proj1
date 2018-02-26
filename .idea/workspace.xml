@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d94cefce-ddfd-4969-b8aa-275c13f24d4b" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/optimization_proj1.iml" afterPath="$PROJECT_DIR$/.idea/optimization_proj1.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/q4.py" afterPath="$PROJECT_DIR$/q4.py" />
+      <change beforePath="$PROJECT_DIR$/question_4.py" afterPath="$PROJECT_DIR$/question_4.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="question_4.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="question_4.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/question_4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-350">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="400">
+              <caret line="35" column="49" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="35" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -40,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="q4.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="q4.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/q4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+            <state relative-caret-position="96">
+              <caret line="69" column="10" lean-forward="true" selection-start-line="69" selection-start-column="10" selection-end-line="69" selection-end-column="10" />
               <folding>
                 <element signature="e#45#63#0" expanded="true" />
               </folding>
@@ -82,8 +81,8 @@
       <list>
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Optimering project 1 JEJ.ipynb" />
-        <option value="$PROJECT_DIR$/q4.py" />
         <option value="$PROJECT_DIR$/question_4.py" />
+        <option value="$PROJECT_DIR$/q4.py" />
       </list>
     </option>
   </component>
@@ -335,21 +334,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/q4.py">
+    <entry file="file://$PROJECT_DIR$/question_4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="e#45#63#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="400">
+          <caret line="35" column="49" lean-forward="true" selection-start-line="22" selection-start-column="4" selection-end-line="35" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/question_4.py">
+    <entry file="file://$PROJECT_DIR$/q4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-350">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="96">
+          <caret line="69" column="10" lean-forward="true" selection-start-line="69" selection-start-column="10" selection-end-line="69" selection-end-column="10" />
+          <folding>
+            <element signature="e#45#63#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

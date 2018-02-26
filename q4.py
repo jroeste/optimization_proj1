@@ -66,6 +66,23 @@ def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=
                     dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
     return dfx
 
+def test_derivatives(z_list,n): #Uferdig
+    N = 10
+    # generate random point and direction
+    x = np.random.randn(N)
+    A,c=construct_A_and_C(N,x)
+    p = np.random.randn(N)
+    #f0 = f(x)
+    g = df_model_1(z_list,n,A,0,c).dot(p)
+    #print(df(x))
+    #print(p)
+    #print(g)
+    # compare directional derivative with finite differences
+    for ep in 10.0 ** np.arange(-1, -13, -1):
+        g_app = (f(z_list, + ep * p) - f0) / ep #z_list,A,c
+        error = abs(g_app - g) / abs(g)
+        print('ep = %e, error = %e' % (ep, error))
+
 if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
     # dimensions must be n = int(k*(k+1)/2) such that k is an integer
     n = 6
