@@ -38,16 +38,16 @@ def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
             A[h][h + j] = x[index]
             A[h + j][h] = x[index]
             index+=1
-    print("x\n", x)
-    print("A\n", A)
-    print("C contains elements in x from index", int(n*(n+1)/2), "\n", C)
+    #print("x\n", x)
+    #print("A\n", A)
+    #print("C contains elements in x from index", int(n*(n+1)/2), "\n", C)
     return A, C
 
 def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=0
     counter=0
     dfx=np.zeros(int(n*(n+1)/2)+n)
     index=0
-    for i in range(z_list):     #length m
+    for i in range(len(z_list)):     #length m
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
             for j in range(n - h):
@@ -81,7 +81,7 @@ if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
             z_list[i][0] = 1
     print("n", n)
     print("z_list\n",z_list)
-    print("dim of x\n", dim)
+    print("dim of x", dim)
     # m=3 gir to w = -1 og en w = 1
     A, c = construct_A_and_C(n, x)
     print("value of model 1:", f_model_1(z_list, A, c))
