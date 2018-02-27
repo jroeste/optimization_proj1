@@ -4,20 +4,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def f_model_1(z_list,A,c):
+def f_model_1(z_list,n,x):
     functionsum=0
+    A, c=construct_A_and_C(n,x)
     for i in range(len(z_list)):    #length m
         if z_list[i][0]>0:
-            functionsum+=compute_r_i_1(z_list[i],A,c,i)**2
+            functionsum+=(compute_r_i_1(z_list[i],A,c))**2
         else:
-            functionsum+=(compute_r_i_1(z_list[i],A,c,i))**2
+            functionsum+=(compute_r_i_1(z_list[i],A,c))**2
     return functionsum
 
-def compute_r_i_1(z_list_i,A,c,i):
+def compute_r_i_1(z_list_i,A,c):
     if z_list_i[0]>0:
         return max(np.dot((z_list_i[1:] - c), (np.matmul(A, (z_list_i[1:] - c)))) - 1, 0)
     else:
-        return max(1-np.dot((z_list_i[1:]-c),(np.matmul(A,z_list_i[1:]-c))),0)
+        return max(1-np.dot((z_list_i[1:]-c),(np.matmul(A,(z_list_i[1:]-c)))),0)
 
 #fix this
 def f_model_2(z_list,A,b):
@@ -29,58 +30,97 @@ def f_model_2(z_list,A,b):
             functionsum+=(max(1-np.dot(z_list[i][1:],np.matmul(A,z_list[i][1:]))-np.dot(b,z_list[i][1:]),0))**2
     return functionsum
 
-
-
-def construct_A_and_C(n,x):
+def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
+    C=x[int(n*(n+1)/2):]
     A=np.zeros((n,n))
-    C=x[n*(n+1)/2:]
     index=0
-    counter=0
     for h in range(n):
         for j in range(n-h):
+            A[h][j+h] = x[index]
+            A[j+h][h] = x[index]
             index+=1
-            A[h][j + h] = x[index]
-            #A[i][j+i]=x[n*i+counter+j]  #should change to x[counter], where counter increases with 1.
-        counter -= h
-        for j in range(h):
-            A[h][j]=A[j][h]
-    return A,C
+    return A, C
 
-def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=0
-    counter=0
+def df_model_1(z_list,n,x): #if model 1: b=0 and c=c, if model 2: b=b and c=0
+    A,c = construct_A_and_C(n,x)
+    print(A,c)
     dfx=np.zeros(int(n*(n+1)/2)+n)
-    index=0
-    for i in range(z_list):     #length m
+    for i in range(len(z_list)):     #length m
+        index = 0
+        ri=compute_r_i_1(z_list[i], A, c)
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
-            for j in range(n - h):
-                if h==j:
-                    dfx[index] += 2*compute_r_i_1(z_list[i],A,c,i)*(z_list[i][h + 1] - c[h]) ** 2
+            for j in range(n-h):
+                if h==(j+h):
+                    dfx[index] += 2*ri*(z_list[i][h + 1] - c[h]) ** 2
                 else:
-                    dfx[index] += 2 * compute_r_i_1(z_list[i],A,c,i)*(z_list[i][j + h + 1] - c[j + h]) * (z_list[i][h + 1] - c[h])
-            counter -= h
-
+                    dfx[index] += 2 * ri*(z_list[i][j + h + 1] - c[h + j]) * (z_list[i][h + 1] - c[h])
+                index+=1
         #find the last n x-entries
         for j in range(n):
             for h in range(n):
                 if h==j:
-                    dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*2*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-4*ri*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
                 else:
-                    dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-4*ri*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
     return dfx
 
-if __name__ == "__main__":
-    n = 6  # dimensions
-    m = 3  # number of z points
-    x = np.ones(n)
-    z_list = np.zeros(m)
-    for i in range(m):
-        z_list[i] = np.ones(n + 1) * i
-        if i < int(m / 2):
-            z_list[i][0] = -1
+def test_derivatives(): #Uferdig
+    n=3
+    N = 9
+    # generate random point and direction
+    x = np.random.randn(N)
+    z = np.random.randn(N,n+1)
+    for i in range(N):
+        if i%2==0:
+            z[i][0]=1
         else:
-            z_list[i][0] = 1
+            z[i][0]=-1
+    p = np.random.randn(N)
+    #print(p)
+    f0 = f_model_1(z, n, x)
+    #g=df_model_1(z,n,x)
+    g = df_model_1(z,n,x).dot(p)
+    #print("gexact",g)
+    #print(df(x))
+    #print(p)
+    print(g)
+     #compare directional derivative with finite differences
+    for ep in 10.0 ** np.arange(-1, -13, -1):
+        g_app = (f_model_1(z,n,x + ep * p) - f0) / ep #z_list,A,c
+        print("g-app",g_app)
+        error = abs(g_app - g) / abs(g)
+        print('ep = %e, error = %e' % (ep, error))
 
-    # m=3 gir to -1 og en 1
-    A, c = construct_A_and_C(n, x)
-    f_model_1(z_list)
+if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
+    n=3
+    z=np.ones((1,4))
+    x=[0,1,2,3,4,5,6,7,8]
+    A,c=construct_A_and_C(n,x)
+    #print(A)
+    #print(c)
+    #print(compute_r_i_1(z[0],A,c))
+    #print(f_model_1(z,n,x))
+    #print(df_model_1(z,n,x))
+
+    # dimensions must be n = int(k*(k+1)/2) such that k is an integer
+    #n = 6
+    #dim = int(n*(n+1)/2) + n
+    #m = 3  # number of z points
+    #x = np.ones(dim)
+    #z_list = np.zeros((m, n + 1))
+    #for i in range(m):
+    #    z_list[i] = np.ones(n + 1) * i
+    #    if i < int(m / 2):
+    #        z_list[i][0] = -1
+    #    else:
+    #        z_list[i][0] = 1
+    #print("n", n)
+    #print("z_list\n",z_list)
+    #print("dim of x", dim)
+    ## m=3 gir to w = -1 og en w = 1
+    #A, c = construct_A_and_C(n, x)
+    #print("value of model 1:", f_model_1(z_list, A, c))
+
+
+    test_derivatives()
