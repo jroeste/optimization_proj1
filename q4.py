@@ -3,7 +3,7 @@ __author__ = 'julie'
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+#should be good
 def f_model_1(z_list,n,x):
     functionsum=0
     A, c=construct_A_and_C(n,x)
@@ -11,13 +11,14 @@ def f_model_1(z_list,n,x):
         functionsum+=(compute_r_i_1(z_list[i],A,c))**2
     return functionsum
 
+#should be correct
 def compute_r_i_1(z_list_i,A,c):
     if z_list_i[0]>0:
         return max(np.dot((z_list_i[1:] - c), (np.matmul(A, (z_list_i[1:] - c)))) - 1, 0)
     else:
         return max(1-np.dot((z_list_i[1:]-c),(np.matmul(A,(z_list_i[1:]-c)))),0)
 
-#fix this
+#Need to make a compute_r_i_2 function
 def f_model_2(z_list,A,b):
     functionsum=0
     for i in range(len(z_list)):    #length m
@@ -27,6 +28,7 @@ def f_model_2(z_list,A,b):
             functionsum+=(max(1-np.dot(z_list[i][1:],np.matmul(A,z_list[i][1:]))-np.dot(b,z_list[i][1:]),0))**2
     return functionsum
 
+#should be correct
 def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
     C=x[int(n*(n+1)/2):]
     A=np.zeros((n,n))
@@ -38,12 +40,14 @@ def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
             index+=1
     return A, C
 
-def df_model_1(z_list,n,x): #if model 1: b=0 and c=c, if model 2: b=b and c=0
+
+def df_model_1(z_list,n,x):
     A,c = construct_A_and_C(n,x)
     dfx=np.zeros(int(n*(n+1)/2)+n)
     for i in range(len(z_list)):     #length m
         index = 0
         ri=compute_r_i_1(z_list[i], A, c)
+
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
             for j in range(h,n):
@@ -52,6 +56,7 @@ def df_model_1(z_list,n,x): #if model 1: b=0 and c=c, if model 2: b=b and c=0
                 else:
                     dfx[index] += z_list[i][0]*4 * ri*(z_list[i][j + 1] - c[j]) * (z_list[i][h + 1] - c[h])
                 index+=1
+
         #find the last n x-entries
         for j in range(n):
             for h in range(n):
@@ -73,7 +78,7 @@ def test_derivatives(m,n,N): #Ferdig
     p = np.random.randn(N)
     f0 = f_model_1(z, n, x)
     g = df_model_1(z,n,x).dot(p)
-     #compare directional derivative with finite differences
+    #compare directional derivative with finite differences
     for ep in 10.0 ** np.arange(-1, -13, -1):
         g_app = (f_model_1(z,n,x + ep * p) - f0) / ep #z_list,A,c
         error = abs(g_app - g) / abs(g)
