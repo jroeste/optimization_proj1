@@ -8,10 +8,7 @@ def f_model_1(z_list,n,x):
     functionsum=0
     A, c=construct_A_and_C(n,x)
     for i in range(len(z_list)):    #length m
-        if z_list[i][0]>0:
-            functionsum+=(compute_r_i_1(z_list[i],A,c))**2
-        else:
-            functionsum+=(compute_r_i_1(z_list[i],A,c))**2
+        functionsum+=(compute_r_i_1(z_list[i],A,c))**2
     return functionsum
 
 def compute_r_i_1(z_list_i,A,c):
@@ -35,73 +32,60 @@ def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
     A=np.zeros((n,n))
     index=0
     for h in range(n):
-        for j in range(n-h):
-            A[h][j+h] = x[index]
-            A[j+h][h] = x[index]
+        for j in range(h,n):
+            A[h][j] = x[index]
+            A[j][h] = x[index]
             index+=1
     return A, C
 
 def df_model_1(z_list,n,x): #if model 1: b=0 and c=c, if model 2: b=b and c=0
     A,c = construct_A_and_C(n,x)
-    print(A,c)
     dfx=np.zeros(int(n*(n+1)/2)+n)
     for i in range(len(z_list)):     #length m
         index = 0
         ri=compute_r_i_1(z_list[i], A, c)
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
-            for j in range(n-h):
-                if h==(j+h):
-                    dfx[index] += 2*ri*(z_list[i][h + 1] - c[h]) ** 2
+            for j in range(h,n):
+                if h==j:
+                    dfx[index] += z_list[i][0]*2*ri*(z_list[i][h + 1] - c[h]) ** 2
                 else:
-                    dfx[index] += 2 * ri*(z_list[i][j + h + 1] - c[h + j]) * (z_list[i][h + 1] - c[h])
+                    dfx[index] += z_list[i][0]*4 * ri*(z_list[i][j + 1] - c[j]) * (z_list[i][h + 1] - c[h])
                 index+=1
         #find the last n x-entries
         for j in range(n):
             for h in range(n):
                 if h==j:
-                    dfx[int(n*(n+1)/2)+j]+=-4*ri*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-z_list[i][0]*4*ri*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
                 else:
-                    dfx[int(n*(n+1)/2)+j]+=-4*ri*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
+                    dfx[int(n*(n+1)/2)+j]+=-z_list[i][0]*4*ri*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
     return dfx
 
-def test_derivatives(): #Uferdig
-    n=3
-    N = 9
+def test_derivatives(m,n,N): #Ferdig
     # generate random point and direction
     x = np.random.randn(N)
-    z = np.random.randn(N,n+1)
-    for i in range(N):
+    z = np.random.randn(m,n+1)
+    for i in range(m):
         if i%2==0:
             z[i][0]=1
         else:
             z[i][0]=-1
     p = np.random.randn(N)
-    #print(p)
     f0 = f_model_1(z, n, x)
-    #g=df_model_1(z,n,x)
     g = df_model_1(z,n,x).dot(p)
-    #print("gexact",g)
-    #print(df(x))
-    #print(p)
-    print(g)
      #compare directional derivative with finite differences
     for ep in 10.0 ** np.arange(-1, -13, -1):
         g_app = (f_model_1(z,n,x + ep * p) - f0) / ep #z_list,A,c
-        print("g-app",g_app)
         error = abs(g_app - g) / abs(g)
         print('ep = %e, error = %e' % (ep, error))
 
 if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
-    n=3
-    z=np.ones((1,4))
-    x=[0,1,2,3,4,5,6,7,8]
-    A,c=construct_A_and_C(n,x)
-    #print(A)
-    #print(c)
-    #print(compute_r_i_1(z[0],A,c))
-    #print(f_model_1(z,n,x))
-    #print(df_model_1(z,n,x))
+    n = 3
+    N = int(n*(n+1)/2+n)
+    m=10
+    test_derivatives(m,n,N)
+
+    #Noke du vil ha her Even?
 
     # dimensions must be n = int(k*(k+1)/2) such that k is an integer
     #n = 6
@@ -123,4 +107,3 @@ if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
     #print("value of model 1:", f_model_1(z_list, A, c))
 
 
-    test_derivatives()
