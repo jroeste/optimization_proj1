@@ -4,8 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def f_model_1(z_list,A,c):
+def f_model_1(z_list,n,x):
     functionsum=0
+    A, c=construct_A_and_C(n,x)
     for i in range(len(z_list)):    #length m
         if z_list[i][0]>0:
             functionsum+=compute_r_i_1(z_list[i],A,c,i)**2
@@ -43,8 +44,8 @@ def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
     #print("C contains elements in x from index", int(n*(n+1)/2), "\n", C)
     return A, C
 
-def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=0
-    counter=0
+def df_model_1(z_list,n,x): #if model 1: b=0 and c=c, if model 2: b=b and c=0
+    A,c = construct_A_and_C(n,x)
     dfx=np.zeros(int(n*(n+1)/2)+n)
     index=0
     for i in range(len(z_list)):     #length m
@@ -55,8 +56,7 @@ def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=
                     dfx[index] += 2*compute_r_i_1(z_list[i],A,c,i)*(z_list[i][h + 1] - c[h]) ** 2
                 else:
                     dfx[index] += 2 * compute_r_i_1(z_list[i],A,c,i)*(z_list[i][j + h + 1] - c[j + h]) * (z_list[i][h + 1] - c[h])
-            counter -= h
-
+            index+=1
         #find the last n x-entries
         for j in range(n):
             for h in range(n):
@@ -64,24 +64,49 @@ def df_model_1(z_list,n,A,b,c): #if model 1: b=0 and c=c, if model 2: b=b and c=
                     dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*2*A[h][j]*(z_list[i][j+1]-c[j]) #legg til alpha
                 else:
                     dfx[int(n*(n+1)/2)+j]+=-2*compute_r_i_1(z_list[i],A,c,i)*A[h][j]*(z_list[i][h+1]-c[h])   #legg til alpha
+        index=0
     return dfx
+
+def test_derivatives(): #Uferdig
+    n=3
+    N = 9
+    # generate random point and direction
+    x = np.random.randn(N)
+    z = np.random.randn(N,n+1)
+    for i in range(N):
+        if i%2==0:
+            z[i][0]=1
+        else:
+            z[i][0]=-1
+    p = np.random.randn(N)
+    f0 = f_model_1(z, n, x)
+    g = df_model_1(z,n,x).dot(p)
+    #print(df(x))
+    #print(p)
+    #print(g)
+    # compare directional derivative with finite differences
+    for ep in 10.0 ** np.arange(-1, -13, -1):
+        g_app = (f_model_1(z,n,x + ep * p) - f0) / ep #z_list,A,c
+        error = abs(g_app - g) / abs(g)
+        print('ep = %e, error = %e' % (ep, error))
 
 if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
     # dimensions must be n = int(k*(k+1)/2) such that k is an integer
-    n = 6
-    dim = int(n*(n+1)/2) + n
-    m = 3  # number of z points
-    x = np.ones(dim)
-    z_list = np.zeros((m, n + 1))
-    for i in range(m):
-        z_list[i] = np.ones(n + 1) * i
-        if i < int(m / 2):
-            z_list[i][0] = -1
-        else:
-            z_list[i][0] = 1
-    print("n", n)
-    print("z_list\n",z_list)
-    print("dim of x", dim)
-    # m=3 gir to w = -1 og en w = 1
-    A, c = construct_A_and_C(n, x)
-    print("value of model 1:", f_model_1(z_list, A, c))
+    #n = 6
+    #dim = int(n*(n+1)/2) + n
+    #m = 3  # number of z points
+    #x = np.ones(dim)
+    #z_list = np.zeros((m, n + 1))
+    #for i in range(m):
+    #    z_list[i] = np.ones(n + 1) * i
+    #    if i < int(m / 2):
+    #        z_list[i][0] = -1
+    #    else:
+    #        z_list[i][0] = 1
+    #print("n", n)
+    #print("z_list\n",z_list)
+    #print("dim of x", dim)
+    ## m=3 gir to w = -1 og en w = 1
+    #A, c = construct_A_and_C(n, x)
+    #print("value of model 1:", f_model_1(z_list, A, c))
+    test_derivatives()
