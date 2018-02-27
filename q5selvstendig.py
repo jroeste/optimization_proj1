@@ -75,10 +75,7 @@ def backtrackingLinesearch(f, df, z_list, n, p, x): # Satisfies sufficient decre
     c1 = 0.4
     alpha = alpha0
     f0 = f(z_list, n, x)
-    #print("f", f0)
     while True:
-        #print("f(x + alpha * p)", f(z_list, n, x + alpha * p))
-        #print("f0 + c1 * alpha * df(z_list, n, A, b, c) * p", f0 + c1 * alpha * np.dot(df(z_list, n, x), p))
         if f(z_list, n, x + alpha*p) <= f0 + c1 * alpha * np.dot(df(z_list, n, x), p):
             return alpha
         else:
@@ -89,14 +86,10 @@ def armijoBacktracking(f, df, z_list, n, p, x): # Both conditions satisfied, usi
     alpha_max = np.inf
     alpha_min = 0
     c1 = 0.4
-    c2 = 0.4
+    c2 = 0.8
     alpha = alpha0
-    f0 = f(z_list, n, x)
-    #print("f", f0)
     while True:
-        #print("f(x + alpha * p)", f(z_list, n, x + alpha * p))
-        #print("f0 + c1 * alpha * df(z_list, n, A, b, c) * p", f0 + c1 * alpha * np.dot(df(z_list, n, x), p))
-        if f(z_list, n, x + alpha*p) >= f0 + c1 * alpha * np.dot(df(z_list, n, x), p):
+        if f(z_list, n, x + alpha*p) >= f(z_list, n, x) + c1 * alpha * np.dot(df(z_list, n, x), p):
             alpha_max = alpha
             alpha = (alpha_min + alpha_max)/2
         elif np.dot(df(z_list, n, x + alpha*p), p) < c2 * np.dot(df(z_list, n, x), p):
@@ -107,34 +100,37 @@ def armijoBacktracking(f, df, z_list, n, p, x): # Both conditions satisfied, usi
                 alpha = (alpha_min + alpha_max)/2
         else:
             return alpha
+    #    print(alpha)
+    return alpha
 
 def steepestDescent(f, df, z_list, n, x):
     xk_prev = x
-    # p is the search direction. Different approaches for finding it yields different algorithms
-    gradient = df(z_list, n, x)
-    print("gradient", gradient)
-    p = - gradient
-    print("p", p)
-    alpha = armijoBacktracking(f, df, z_list, n, p, x) # finding step length
+    p = - df(z_list, n, x) # descent direction
+    alpha = armijoBacktracking(f, df, z_list, n, p, x) # step length
     xk = xk_prev + alpha * p
-    print("avstand mellom xk og xk_prev:", abs(f(z_list, n, xk) - f(z_list, n, xk_prev)))
+    print("xk", xk)
+    print("f(xk)", f(z_list, n, xk))
     while abs(f(z_list, n, xk) - f(z_list, n, xk_prev)) > 10e-3:
-        print("avstand mellom xk og xk_prev:", abs(f(z_list, n, xk) - f(z_list, n, xk_prev)))
-        gradient = df(z_list, n, xk)
-        p = - gradient
-        alpha = armijoBacktracking(f, df, z_list, n, p, xk)  # finding step length
+        print("\nNy runde")
+        A, c = construct_A_and_C(n, xk)
+        print("A", A)
+        print("c", c)
+        print("f(xk)", f(z_list, n, xk))
+        p = - df(z_list, n, xk)
+        alpha = armijoBacktracking(f, df, z_list, n, p, xk)
         xk, xk_prev = xk_prev + alpha * p, xk
+    print("xk", xk)
     return xk
 
 if __name__ == "__main__":
-    n = 6
+    n = 2
     dim = int(n*(n+1)/2) + n
-    m = 3  # number of z points
+    m = 4  # number of z points
     x = np.ones(dim)
     z_list = np.zeros((m, n + 1))
     for i in range(m):
         z_list[i] = np.ones(n + 1) * i
-        if i < int(m / 2):
+        if abs(i-1.5) > 1:
             z_list[i][0] = -1
         else:
             z_list[i][0] = 1
@@ -142,8 +138,11 @@ if __name__ == "__main__":
     print("dim of x", dim)
     # m=3 gir to w = -1 og en w = 1
     A, c = construct_A_and_C(n, x)
-
+    print(z_list)
+    print(A)
+    print(c)
     # optimization algorithms require f and x0. They find direction p locally in their own way
-    print("value of model 1 at x0:", f_model_1(z_list, n, x))
+    print("xo", x)
+    print("f(x0):", f_model_1(z_list, n, x))
     result_x = steepestDescent(f_model_1, df_model_1, z_list, n, x)
     print("value of model 1 at end of steepest descent:", f_model_1(z_list, n, result_x))
