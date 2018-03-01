@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="5a62d1d5-80e5-44b1-a5e2-e72d3ed66792" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Task3.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+=======
     <list default="true" id="f74f9f61-bdfe-4539-9b0a-d26b83386847" name="Default" comment="" />
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,7 +17,24 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/optimization_proj1$testingcurriculum.coverage" NAME="testingcurriculum Coverage Results" MODIFIED="1519772703863" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+=======
+<<<<<<< HEAD
+    <SUITE FILE_PATH="coverage/optimization_proj1$Task3.coverage" NAME="Task3 Coverage Results" MODIFIED="1519862878476" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="Task3.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Task3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1050">
+              <caret line="42" column="11" lean-forward="true" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+=======
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
     <SUITE FILE_PATH="coverage/optimization_proj1$q4.coverage" NAME="q4 Coverage Results" MODIFIED="1519770902743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/optimization_proj1$optimization_proj1.coverage" NAME="optimization_proj1 Coverage Results" MODIFIED="1519402956973" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/optimization_proj1$question_4.coverage" NAME="question_4 Coverage Results" MODIFIED="1519660400176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -22,11 +47,18 @@
             <state relative-caret-position="0">
               <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
               <folding />
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="q4.py" pinned="false" current-in-tab="false">
+=======
+<<<<<<< HEAD
+=======
+      <file leaf-file-name="q4.py" pinned="false" current-in-tab="true">
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
         <entry file="file://$PROJECT_DIR$/q4.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="225">
@@ -38,6 +70,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="testingcurriculum.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/testingcurriculum.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,6 +95,9 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -77,8 +113,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/q4.py" />
         <option value="$PROJECT_DIR$/testingcurriculum.py" />
+=======
+        <option value="$PROJECT_DIR$/Task3.py" />
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
       </list>
     </option>
   </component>
@@ -88,7 +128,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="55" />
     <option name="width" value="695" />
     <option name="height" value="907" />
@@ -109,6 +149,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+      <pane id="ProjectPane" />
+=======
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
       <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
@@ -124,6 +168,9 @@
       </pane>
     </panes>
   </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -136,8 +183,17 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.testingcurriculum">
+=======
+<<<<<<< HEAD
+  <component name="RunManager">
+    <configuration name="Task3" type="PythonConfigurationType" factoryName="Python" temporary="true">
+=======
+  <component name="RunManager" selected="Python.q4">
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
     <configuration name="q4" type="PythonConfigurationType" factoryName="Python" temporary="true">
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -150,7 +206,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="optimization_proj1" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/q4.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Task3.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -178,9 +234,14 @@
       <item index="1" class="java.lang.String" itemvalue="Python.testingcurriculum" />
     </list>
     <recent_temporary>
+<<<<<<< HEAD
       <list size="2">
         <item index="0" class="java.lang.String" itemvalue="Python.testingcurriculum" />
         <item index="1" class="java.lang.String" itemvalue="Python.q4" />
+=======
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Python.Task3" />
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
       </list>
     </recent_temporary>
   </component>
@@ -191,10 +252,21 @@
     <configuration />
   </component>
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5a62d1d5-80e5-44b1-a5e2-e72d3ed66792" name="Default" comment="" />
+      <created>1519859932819</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519859932819</updated>
+    </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
+=======
     <frame x="54" y="-8" width="1554" height="916" extended-state="6" />
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18206158" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -230,6 +302,12 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/Task3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="42" column="11" lean-forward="true" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+=======
     <entry file="file://$PROJECT_DIR$/question_4.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -282,12 +360,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="275">
           <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
           <folding>
             <element signature="e#45#63#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/q4.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -298,6 +378,10 @@
         </state>
       </provider>
     </entry>
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> aa3f8a3922c8f23fc1e2f109eeda8ec376aae067
     <entry file="file://$PROJECT_DIR$/q5.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -318,5 +402,6 @@
         </state>
       </provider>
     </entry>
+>>>>>>> 460b08e79bd1b0c20827177590a4d5affa4805c7
   </component>
 </project>
