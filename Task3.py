@@ -31,10 +31,10 @@ def classify_by_ellipse(m,n,area):
     '''Perform classification:'''
     for i in range(m):
         f_value=eval_func_model_1_2D(z[i][1],z[i][2],A,c)
-        if f_value>=1:  #if outside the ellipse, the weight should be zero
+        if f_value>=1:  #if outside the ellipse, the weight should be -1
             z[i][0]=-1
         else:
-            z[i][0]=1   #if inside the ellipse, the weight should be zero
+            z[i][0]=1   #if inside the ellipse, the weight should be +1
     return z
 
 
