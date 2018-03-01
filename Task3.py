@@ -127,7 +127,7 @@ if __name__=='__main__':
 
     z_list=classify_by_ellipse(m,n,area)
 
-    x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)
+    x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)[0]
     A,c=q4.construct_A_and_C(n,x_vector)
     X,Y,Z=make_ellipse(A,c,area)
     plot_dataset_2d(X,Y,Z)
