@@ -68,13 +68,24 @@ def BFGS(f, df, z_list, n, xk):
         residuals.append(f(z_list, n, xk))
     return xk, residuals
 
-def SR1(f, df, z_list, n, x):
+# A Trust Region Method
+# Assumption vi bør spørre om: Det er greit å starte med B = Identity som førsteutkast til B?
+def SR1(f, df, z_list, n, xk):
     B = np.identity(n)
     delta = 0.2
     epsilon = 10e-3
     eta = 10e-4
     r = 0.5
     while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-6:
+        #Compute sk by solving subproblem
+        yk = df(z_list, n, xk + sk) - df(z_list, n, xk)
+        ared = f(z_list, n, xk) - f(z_list, n, xk + sk)
+        pred = -(np.dot(df(z_list, n, xk), sk) + 0.5*np.dot(sk, np.matmul(B, sk)))
+        if ared/pred > eta:
+            xk, xk_prev = xk + sk, xk
+        else:
+            xk, xk_prev = xk, xk
+
 
 
 def convergenceFR():
