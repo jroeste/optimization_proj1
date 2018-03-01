@@ -83,15 +83,21 @@ def plot_rectangle_and_points(m,n,area,rec):
 
 def plot_dataset_2d(X,Y,Z):
     #Plot datasett sammen med ellipse fra optimeringsløsning
-    plt.figure()
     CS = plt.contour(X, Y, Z, [1])
     plt.clabel(CS, inline=1, fontsize=10)
     plt.grid()
-    plt.show()
+
+def plot_z_points(z):
+    for i in range(m):
+        if z[i][0]<0:
+            col='green'
+        else:
+            col='red'
+        plt.plot(z[i][1], z[i][2], 'o', color=col)
 
 
 def make_ellipse(A,c,area):
-    delta = 0.01
+    delta = 0.1
     x = np.arange(-area, area+0.01, delta)
     y = np.arange(-area, area+0.01, delta)
     X, Y = np.meshgrid(x, y)
@@ -101,7 +107,7 @@ def make_ellipse(A,c,area):
 
 if __name__=='__main__':
     '''Constants:'''
-    m=10
+    m=5
     n=2
     area=2.0
     x_length=int(n*(n+1)/2)+n
@@ -115,16 +121,18 @@ if __name__=='__main__':
 
     A = [[1, 0], [0, 4]]  # symmetric, positive definite A
     c = np.random.uniform(-1, 1, n)
-    x_initial=np.zeros(x_length)
+    x_initial=np.ones(x_length)
 
     '''Create dataset'''
+
+    z_list=classify_by_ellipse(m,n,area)
+
+    x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)
+    A,c=q4.construct_A_and_C(n,x_vector)
     X,Y,Z=make_ellipse(A,c,area)
-    Z=classify_by_ellipse(m,n,area)
-    print("X",X)
-    print("Y",Y)
-    print("Z",Z)
-    x_vector=q5.steepestDescent(q4.f_model_1(Z,n,x_initial),q4.df_model_1(Z,n,x_initial),Z,n,x_initial)
-    print(x_vector)
+    plot_dataset_2d(X,Y,Z)
+    plot_z_points(z_list)
+    plt.show()
 
 
     #plot_dataset_2d(X,Y,Z)

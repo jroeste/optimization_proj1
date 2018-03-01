@@ -84,6 +84,8 @@ if __name__ == "__main__":
         else:
             z_list[i][0] = 1
     # m=3 gir to w = -1 og en w = 1
+    print(z_list)
+
     print("n", n)
     print("xo", x)
     result_x = steepestDescent(q4.f_model_1, q4.df_model_1, z_list, n, x)
