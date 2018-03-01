@@ -61,13 +61,10 @@ def df_model_1(z_list,n,x):
                     dfx[index] += z_list[i][0]*4 * ri*(z_list[i][j + 1] - c[j]) * (z_list[i][h + 1] - c[h])
                 index+=1
 
-        #find the last n x-entries
+        #find the last n x-entries for  or c's
         for h in range(n):
             for j in range(n):
-                if h==j:
-                    dfx[int(n*(n+1)/2)+h]+=-z_list[i][0]*4*ri*A[j][h]*(z_list[i][h+1]-c[h]) #legg til alpha
-                else:
-                    dfx[int(n*(n+1)/2)+h]+=-z_list[i][0]*4*ri*A[j][h]*(z_list[i][j+1]-c[j])   #legg til alpha
+                dfx[int(n * (n + 1) / 2) + h] += -z_list[i][0] * 4 * ri * A[j][h] * (z_list[i][j + 1] - c[j])
     return dfx
 
 
@@ -77,14 +74,13 @@ def df_model_2(z_list,n,x):
     for i in range(len(z_list)):     #length m
         index = 0
         ri=compute_r_i_2(z_list[i], A, b)
-
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
             for j in range(h,n):
                 if h==j:
                     dfx[index] += z_list[i][0]*2*ri*z_list[i][h + 1] ** 2
                 else:
-                    dfx[index] += z_list[i][0]*4 * ri*(z_list[i][j + 1]) * (z_list[i][h + 1])
+                    dfx[index] += z_list[i][0]*4* ri*(z_list[i][j + 1]) * (z_list[i][h + 1])
                 index+=1
 
         #find the last n x-entries
