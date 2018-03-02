@@ -106,17 +106,17 @@ def make_ellipse(A,c,area):
 
 if __name__=='__main__':
     '''Constants:'''
-    m=5
+    m=500
     n=2
     area=2.0
     x_length=int(n*(n+1)/2)+n
 
     '''Initials'''
     x_vec=np.ones(x_length) #x_vec=q5.steepest decent(f, df, z_list, n, x)
-    rec = [-area/np.random.uniform(1,4)
-            ,area/np.random.uniform(1,4)
-            ,-area/np.random.uniform(1,4)
-            ,area/np.random.uniform(1,4)]
+    rec = [-area/np.random.uniform(1,2)
+            ,area/np.random.uniform(1,2)
+            ,-area/np.random.uniform(1,2)
+            ,area/np.random.uniform(1,2)]
 
     A = [[1, 0], [0, 4]]  # symmetric, positive definite A
     c = np.random.uniform(-1, 1, n)
@@ -124,9 +124,10 @@ if __name__=='__main__':
 
     '''Create dataset'''
 
-    z_list=classify_by_ellipse(m,n,area)
+    z_list=classify_by_rectangle(m,n,area,rec)
 
-    x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)[0]
+    #x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)[0]
+    x_vector = q5.fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)[0]
     A,c=q4.construct_A_and_C(n,x_vector)
     X,Y,Z=make_ellipse(A,c,area)
     plot_dataset_2d(X,Y,Z)
@@ -140,5 +141,3 @@ if __name__=='__main__':
     #Kjør optimeringsalgoritme på datasett
     #plot løsning med datasett-punkter
     #repeat for ulike metoder osv
-
-main()
