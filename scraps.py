@@ -121,3 +121,16 @@ def SR1(f, df, z_list, n, xk):
 #    print("Residuals of BFGS", res_bfgs[-5:])
 
 #    convergencePlot(res_bfgs)
+
+
+def firstPlot(method, z_list, n, x):
+    x_m1, res_m1 = method(q4.f_model_1, q4.df_model_1, z_list, n, x)
+    klist1 = [i for i in range(len(res_m1))]
+    plt.plot(klist1, res_m1)
+#    x_m2, res_m2 = method(q4.f_model_2, q4.df_model_2, z_list, n, x)
+#    klist2 = [i for i in range(len(res_m2))]
+#    plt.loglog(klist2, res_m2)
+    plt.xlabel("k")
+    plt.ylabel("f(xk)")
+    #plt.legend(["Model 1", "Model 2"])
+    plt.title("Fletcher Reeves, Model 1, m = 100")

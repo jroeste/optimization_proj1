@@ -1,0 +1,1 @@
+p1_fr_M1_m100_3 viser 100 kjøringer i 2D av FR på Model 1 med 100 punkter
