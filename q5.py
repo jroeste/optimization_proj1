@@ -48,7 +48,7 @@ def steepestDescent(f, df, z_list, n, xk):
     dfk = df(z_list, n, xk)
     residuals = []
     residuals.append(fk)
-    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-4:
+    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
         p = - dfk
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk = xk + alpha * p
@@ -100,8 +100,6 @@ def BFGS(f, df, z_list, n, xk):
         xk = xk + alpha*p
         sk = xk - xk_prev
         fk=f(z_list, n, xk)
-        print("dfk",np.linalg.norm(dfk, 2))
-        print("fk",fk)
         dfk_prev=dfk
         dfk = df(z_list, n, xk)
         yk = dfk - dfk_prev
@@ -115,7 +113,6 @@ def BFGS(f, df, z_list, n, xk):
         if counter%5==0:
             print(counter)
     print("ferdig med BFGS")
-    print(xk)
     return xk, residuals
 
 def convergenceFR():
