@@ -23,12 +23,14 @@ def note3algoritme(f, df, z_list, n, p, x):
     alpha_min = 0
     alpha_max = np.inf
     counter = 0
+    dfk = df(z_list, n, x)
+    fk=f(z_list, n, x)
     while True: # Eneste forskjell er > i stedet for >=
-        dfk = df(z_list, n, x)
-        if f(z_list, n, x + alpha*p) > f(z_list, n, x) + c1*alpha*np.dot(dfk, p):  #No suff decr
+
+        if f(z_list, n, x + alpha*p) > fk + c1*alpha*np.dot(dfk, p):  #No suff decr
             alpha_max = alpha
             alpha = (alpha_max + alpha_min)/2
-        elif np.dot(df(z_list, n, x + alpha*p), p) < c2*np.dot(df(z_list, n, x), p): # No curv con
+        elif np.dot(df(z_list, n, x + alpha*p), p) < c2*np.dot(dfk, p): # No curv con
             alpha_min = alpha
             if np.isinf(alpha_max):
                 alpha = 2*alpha
@@ -41,13 +43,21 @@ def note3algoritme(f, df, z_list, n, p, x):
 #            return backtrackingLinesearch(f, df, z_list, n, p, x)
 
 def steepestDescent(f, df, z_list, n, xk):
+    counter=0
+    fk = f(z_list, n, xk)
+    dfk = df(z_list, n, xk)
     residuals = []
-    residuals.append(f(z_list, n, xk))
-    while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-4:
-        p = - df(z_list, n, xk)
+    residuals.append(fk)
+    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-4:
+        p = - dfk
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk = xk + alpha * p
-        residuals.append(f(z_list, n, xk))
+        fk=f(z_list, n, xk)
+        dfk=df(z_list, n, xk)
+        residuals.append(fk)
+        counter+=1
+        if counter%5==0:
+            print(counter)
     return xk, residuals
 
 # A Conjugate Gradient Method
@@ -70,30 +80,42 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
         fk = f(z_list, n, xk)
         residuals.append(fk)
         counter += 1
-        if counter >= 100:
-            return
+        if counter % 5==0:
+            print(counter)
     return xk, residuals
 
 # A Quasi-Newton Method
 def BFGS(f, df, z_list, n, xk):
     residuals = []
     residuals.append(f(z_list, n, xk))
-    Hk = np.identity(int(n * (n + 1) / 2) + n)
+    I=np.identity(int(n * (n + 1) / 2) + n)
+    Hk = I
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
+    counter=0
     while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
-        p = - np.dot(Hk, dfk)
+        p = -Hk.dot(dfk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
-        xk, xk_prev = xk + alpha * p, xk
-        fk = f(z_list, n, xk)
+        xk_prev=xk
+        xk = xk + alpha*p
         sk = xk - xk_prev
-        yk = df(z_list, n, xk) - df(z_list, n, xk_prev)
+        fk=f(z_list, n, xk)
+        print("dfk",np.linalg.norm(dfk, 2))
+        print("fk",fk)
+        dfk_prev=dfk
+        dfk = df(z_list, n, xk)
+        yk = dfk - dfk_prev
         rho = 1 / np.dot(yk, sk)
-        Hk = np.matmul(np.matmul((np.identity(int(n * (n + 1) / 2) + n) - rho * np.dot(sk, yk)), Hk),
-                                (np.identity(int(n * (n + 1) / 2) + n) - rho * np.dot(yk, sk))) + rho * np.dot(sk,
-                                                                                                               sk)
-        residuals.append(f(z_list, n, xk))
+        Hk_prev=Hk
+        Hk=np.matmul(I-rho*np.outer(sk,yk),np.matmul(Hk_prev,I-rho*np.outer(yk,sk))) + rho*np.outer(sk,sk)
+        #Hk = np.matmul(np.matmul(I - rho * np.dot(sk, yk), Hk),
+        #                        (np.identity(int(n * (n + 1) / 2) + n) - rho * np.dot(yk, sk))) + rho * np.dot(sk,sk)
+        residuals.append(fk)
+        counter+=1
+        if counter%5==0:
+            print(counter)
     print("ferdig med BFGS")
+    print(xk)
     return xk, residuals
 
 def convergenceFR():

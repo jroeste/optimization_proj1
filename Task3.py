@@ -95,41 +95,43 @@ def plot_z_points(z):
             col='red'
         plt.plot(z[i][1], z[i][2], 'o', color=col)
 
-def make_ellipse(A,c,area):
+def make_ellipse(A,c,area,func):
     delta = 0.1
     x = np.arange(-area, area+0.01, delta)
     y = np.arange(-area, area+0.01, delta)
     X, Y = np.meshgrid(x, y)
-    Z=eval_func_model_1_2D(X, Y, A, c)
+    Z=func(X, Y, A, c)
     return X,Y,Z
 
 
 if __name__=='__main__':
     '''Constants:'''
-    m=5
+    m=100
     n=2
     area=2.0
     x_length=int(n*(n+1)/2)+n
 
+
     '''Initials'''
-    x_vec=np.ones(x_length) #x_vec=q5.steepest decent(f, df, z_list, n, x)
-    rec = [-area/np.random.uniform(1,2)
-            ,area/np.random.uniform(1,2)
-            ,-area/np.random.uniform(1,2)
-            ,area/np.random.uniform(1,2)]
+    x_vec=np.zeros(x_length) #x_vec=q5.steepest decent(f, df, z_list, n, x)
+    x_vec[0],x_vec[2]=1,1
+    rec = [-area/np.random.uniform(1,4)
+            ,area/np.random.uniform(1,4)
+            ,-area/np.random.uniform(1,4)
+            ,area/np.random.uniform(1,4)]
 
     A = [[1, 0], [0, 4]]  # symmetric, positive definite A
     c = np.random.uniform(-1, 1, n)
     x_initial=np.ones(x_length)
-
     '''Create dataset'''
 
     z_list=classify_by_rectangle(m,n,area,rec)
 
     #x_vector=q5.steepestDescent(q4.f_model_1,q4.df_model_1,z_list,n,x_initial)[0]
     x_vector = q5.BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)[0]
+    print(q4.f_model_1(z_list,n,x_vector))
     A,c=q4.construct_A_and_C(n,x_vector)
-    X,Y,Z=make_ellipse(A,c,area)
+    X,Y,Z=make_ellipse(A,c,area,eval_func_model_1_2D)
     plot_dataset_2d(X,Y,Z)
     plot_z_points(z_list)
     plt.show()
