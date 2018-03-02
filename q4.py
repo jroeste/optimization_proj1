@@ -54,6 +54,7 @@ def df_model_1(z_list,n,x):
         index = 0
         ri=compute_r_i_1(z_list[i], A, c)
 
+
         #find the first n*(n+1)/2 x-entries
         for h in range(n):      #length n
             for j in range(h,n):

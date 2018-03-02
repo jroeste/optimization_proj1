@@ -33,10 +33,10 @@ def note3algoritme(f, df, z_list, n, p, x):
 def steepestDescent(f, df, z_list, n, xk):
     residuals = []
     residuals.append(f(z_list, n, xk))
-    while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-2:
+    while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-4:
         p = - df(z_list, n, xk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
-        xk, xk_prev = xk + alpha * p, xk
+        xk = xk + alpha * p
         residuals.append(f(z_list, n, xk))
     return xk, residuals
 
@@ -54,7 +54,7 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
         xk, xk_prev = xk + alpha * p, xk
         dfkplus1 = df(z_list, n, xk)
         beta_kplus1 = np.dot(dfkplus1, dfkplus1)/np.dot(dfk, dfk)
-        p = - dfkplus1 + beta_kplus1*p
+        p =  -dfkplus1 + beta_kplus1*p
         dfk = dfkplus1
         fk = f(z_list, n, xk)
         residuals.append(fk)
