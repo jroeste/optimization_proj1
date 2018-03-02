@@ -43,7 +43,7 @@ def note3algoritme(f, df, z_list, n, p, x):
 def steepestDescent(f, df, z_list, n, xk):
     residuals = []
     residuals.append(f(z_list, n, xk))
-    while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-6:
+    while f(z_list, n, xk) > 10e-4 and np.linalg.norm(df(z_list, n, xk), 2) > 10e-2:
         p = - df(z_list, n, xk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk, xk_prev = xk + alpha * p, xk
