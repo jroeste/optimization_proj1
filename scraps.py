@@ -109,3 +109,15 @@ def SR1(f, df, z_list, n, xk):
         else:
             xk, xk_prev = xk, xk
 
+
+#    x_steep, res_steep = steepestDescent(q4.f_model_1, q4.df_model_1, z_list, n, x)
+#    print("value of model 1 at end of steepest descent:", q4.f_model_1(z_list, n, x_steep))
+#    print("Residuals of Steepest Descent", res_steep[-5:])
+#    x_fr, res_fr = fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x)
+#    print("value of model 1 at end of fletcher reeves:", q4.f_model_1(z_list, n, x_fr))
+#    print("Residuals of Fletcher reeves", res_fr[-5:])
+#    x_bfgs, res_bfgs = BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x)
+#    print("value of model 1 at end of BFGS:", q4.f_model_1(z_list, n, x_bfgs))
+#    print("Residuals of BFGS", res_bfgs[-5:])
+
+#    convergencePlot(res_bfgs)

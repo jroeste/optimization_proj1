@@ -16,9 +16,9 @@ def f_model_1(z_list,n,x):
 
 def compute_r_i_1(z_list_i,A,c):
     if z_list_i[0]>0:
-        return max(np.dot((z_list_i[1:] - c), (np.matmul(A, (z_list_i[1:] - c)))) - 1, 0)
+        return max([np.dot((z_list_i[1:] - c), (np.matmul(A, (z_list_i[1:] - c)))) - 1, 0])
     else:
-        return max(1-np.dot((z_list_i[1:]-c),(np.matmul(A,(z_list_i[1:]-c)))),0)
+        return max([1-np.dot((z_list_i[1:]-c),(np.matmul(A,(z_list_i[1:]-c)))),0])
 
 
 def f_model_2(z_list,n,x):
@@ -30,9 +30,9 @@ def f_model_2(z_list,n,x):
 
 def compute_r_i_2(z_list_i,A,b):
     if z_list_i[0]>0:
-        return max(np.dot(z_list_i[1:],np.matmul(A,z_list_i[1:]))+np.dot(b,z_list_i[1:])-1,0)
+        return max([np.dot(z_list_i[1:],np.matmul(A,z_list_i[1:]))+np.dot(b,z_list_i[1:])-1,0])
     else:
-        return max(1-np.dot(z_list_i[1:],np.matmul(A,z_list_i[1:]))-np.dot(b,z_list_i[1:]),0)
+        return max([1-np.dot(z_list_i[1:],np.matmul(A,z_list_i[1:]))-np.dot(b,z_list_i[1:]),0])
 
 
 def construct_A_and_C(n,x): # Her har Even vært og endret ting 26.02
