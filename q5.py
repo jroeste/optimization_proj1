@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import time
 import q4 as q4
 
-def backtrackingLinesearch(f, df, z_list, n, p, x): # Satisfies sufficient decrease, doesn't care about curvature condition
+def backtrackingLinesearch(f, df, z_list, n, p, x):
     alpha0 = 1
     rho = 0.5
     c1 = 0.4
@@ -15,18 +15,15 @@ def backtrackingLinesearch(f, df, z_list, n, p, x): # Satisfies sufficient decre
         else:
             alpha = rho * alpha
 
-# Denne finner alpha
 def note3algoritme(f, df, z_list, n, p, x):
     c1 = 0.5
     c2 = 0.6
     alpha = 1
     alpha_min = 0
     alpha_max = np.inf
-    counter = 0
     dfk = df(z_list, n, x)
     fk=f(z_list, n, x)
-    while True: # Eneste forskjell er > i stedet for >=
-
+    while True:
         if f(z_list, n, x + alpha*p) > fk + c1*alpha*np.dot(dfk, p):  #No suff decr
             alpha_max = alpha
             alpha = (alpha_max + alpha_min)/2
@@ -38,12 +35,8 @@ def note3algoritme(f, df, z_list, n, p, x):
                 alpha = (alpha_max + alpha_min) / 2
         else:
             return alpha
-#        if counter >100:
-#            print("Step selection brukte over 100 iterasjoner. Returnerer Backtracking.")
-#            return backtrackingLinesearch(f, df, z_list, n, p, x)
 
 def steepestDescent(f, df, z_list, n, xk):
-    counter=0
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
     residuals = []
@@ -55,9 +48,6 @@ def steepestDescent(f, df, z_list, n, xk):
         fk=f(z_list, n, xk)
         dfk=df(z_list, n, xk)
         residuals.append(fk)
-        counter+=1
-        if counter%5==0:
-            print(counter)
     return xk, residuals
 
 # A Conjugate Gradient Method
@@ -67,21 +57,15 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
     residuals.append(fk)
     dfk = df(z_list, n, xk)
     p = -dfk
-    counter = 0
     while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
-        start = time.time()
         alpha = note3algoritme(f, df, z_list, n, p, xk) # Tar denne lang tid?
-        #print("note3algo brukte", time.time() - start, "sek")
         xk, xk_prev = xk + alpha * p, xk
         dfkplus1 = df(z_list, n, xk)
         beta_kplus1 = np.dot(dfkplus1, dfkplus1)/np.dot(dfk, dfk)
-        p =  -dfkplus1 + beta_kplus1*p
+        p = -dfkplus1 + beta_kplus1*p
         dfk = dfkplus1
         fk = f(z_list, n, xk)
         residuals.append(fk)
-        counter += 1
-        if counter % 5==0:
-            print(counter)
     return xk, residuals
 
 # A Quasi-Newton Method
@@ -92,7 +76,6 @@ def BFGS(f, df, z_list, n, xk):
     Hk = I
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
-    counter=0
     while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
         p = -Hk.dot(dfk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
@@ -100,36 +83,34 @@ def BFGS(f, df, z_list, n, xk):
         xk = xk + alpha*p
         sk = xk - xk_prev
         fk=f(z_list, n, xk)
-        print("dfk",np.linalg.norm(dfk, 2))
-        print("fk",fk)
         dfk_prev=dfk
         dfk = df(z_list, n, xk)
         yk = dfk - dfk_prev
         rho = 1 / np.dot(yk, sk)
         Hk_prev=Hk
         Hk=np.matmul(I-rho*np.outer(sk,yk),np.matmul(Hk_prev,I-rho*np.outer(yk,sk))) + rho*np.outer(sk,sk)
-        #Hk = np.matmul(np.matmul(I - rho * np.dot(sk, yk), Hk),
-        #                        (np.identity(int(n * (n + 1) / 2) + n) - rho * np.dot(yk, sk))) + rho * np.dot(sk,sk)
         residuals.append(fk)
-        counter+=1
-        if counter%5==0:
-            print(counter)
-    print("ferdig med BFGS")
-    print(xk)
     return xk, residuals
 
-def convergenceFR():
-    x_fr_1, res_fr_1 = fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x)
-    klist = [i for i in range(len(res_fr_1))]
-    plt.loglog(klist, res_fr_1)
-    x_fr_2, res_fr_2 = fletcherReeves(q4.f_model_2, q4.df_model_2, z_list, n, x)
-    klist = [i for i in range(len(res_fr_2))]
-    plt.loglog(klist, res_fr_2)
+def firstPlot(method, z_list, n, x):
+    x_m2, res_m2 = method(q4.f_model_1, q4.df_model_1, z_list, n, x)
+    klist2 = [i for i in range(len(res_m2))]
+    plt.plot(klist2, res_m2, color="b")
     plt.xlabel("k")
     plt.ylabel("f(xk)")
-    plt.legend(["Model 1", "Model 2"])
-    plt.title("Fletcher Reeves, m = 100")
-#    plt.legend(["Fletcher Reeves", "Steepest Descent", "BFGS"])
+    plt.title("BFGS, Model 1, m = 100")
+
+def firstPlotTogether(method1, method2, z_list, n, x):
+    x_m1, res_m1 = method1(q4.f_model_2, q4.df_model_2, z_list, n, x)
+    klist1 = [i for i in range(len(res_m1))]
+    plt.plot(klist1, res_m1, color="b")
+    x_m2, res_m2 = method2(q4.f_model_2, q4.df_model_2, z_list, n, x)
+    klist2 = [i for i in range(len(res_m2))]
+    plt.plot(klist2, res_m2, color="r")
+    plt.xlabel("k")
+    plt.ylabel("f(xk)")
+    plt.legend(["BFGS", "Fletcher Reeves"])
+    plt.title("Model 2, m = 100")
 
 def otherPlot():
     n = 2
@@ -198,7 +179,6 @@ def otherPlot_BFGS():
     print("plotting")
     plt.show()
 
-
 if __name__ == "__main__":
     n = 2
     m = 100  # number of z points
@@ -206,16 +186,19 @@ if __name__ == "__main__":
     x[1] = 0
     x[3] = 0
     x[4] = 0
-
-# Her bruker jeg Julie sin classify by ellipse for å lage punkter, men i vilkårlig dimensjon
     area = 2
-    A, c=q4.construct_A_and_C(n,x)
-    z_list = np.random.uniform(-area, area, (m, n + 1))
-    for i in range(m):
-        z_list[i][0] = 1
-        if q4.compute_r_i_1(z_list[i],A,c) >= 1:
-            z_list[i][0] = -1
-    #print(z_list)
 
-    # convergenceFR()
-    otherPlot_BFGS()
+    # Plot 1 FR
+    for times in range(100):
+        A, c=q4.construct_A_and_C(n,x)
+        z_list = np.random.uniform(-area, area, (m, n + 1))
+        for i in range(m):
+            z_list[i][0] = 1
+            if q4.compute_r_i_1(z_list[i],A,c) >= 1:
+                z_list[i][0] = -1
+        #firstPlot(BFGS, z_list, n, x)
+        #firstPlotTogether(BFGS, fletcherReeves, z_list, n, x)
+    print("plotting ;)")
+    plt.show()
+
+    #otherPlot_BFGS()
