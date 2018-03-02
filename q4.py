@@ -2,6 +2,8 @@ __author__ = 'julie'
 # -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
+import time
+
 
 
 def f_model_1(z_list,n,x):

@@ -140,5 +140,3 @@ if __name__=='__main__':
     #Kjør optimeringsalgoritme på datasett
     #plot løsning med datasett-punkter
     #repeat for ulike metoder osv
-
-main()
