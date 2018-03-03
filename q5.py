@@ -57,7 +57,7 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
     residuals.append(fk)
     dfk = df(z_list, n, xk)
     p = -dfk
-    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
+    while np.linalg.norm(dfk, 2) > 10e-8:
         alpha = note3algoritme(f, df, z_list, n, p, xk) # Tar denne lang tid?
         xk, xk_prev = xk + alpha * p, xk
         dfkplus1 = df(z_list, n, xk)
@@ -76,7 +76,7 @@ def BFGS(f, df, z_list, n, xk):
     Hk = I
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
-    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
+    while np.linalg.norm(dfk, 2) > 10e-8:
         p = -Hk.dot(dfk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk_prev=xk
@@ -100,13 +100,13 @@ def plot1(n, x, m):
             z_list[i][0] = 1
             if q4.compute_r_i_1(z_list[i],A,c) >= 1:
                 z_list[i][0] = -1
-        #firstPlot(BFGS, z_list, n, x)
-        firstPlotTogether(BFGS, fletcherReeves, z_list, n, x)
+        firstPlot(BFGS, z_list, n, x)
+        #firstPlotTogether(BFGS, fletcherReeves, z_list, n, x)
 
 def firstPlot(method, z_list, n, x):
     x_m2, res_m2 = method(q4.f_model_1, q4.df_model_1, z_list, n, x)
     klist2 = [i for i in range(len(res_m2))]
-    plt.loglog(klist2, res_m2, color="b")
+    plt.plot(klist2, res_m2)
     plt.xlabel("k")
     plt.ylabel("f(xk)")
     plt.title("BFGS, Model 1, m = 100")
@@ -117,7 +117,7 @@ def firstPlotTogether(method1, method2, z_list, n, x):
     plt.plot(klist1, res_m1, color="b")
     x_m2, res_m2 = method2(q4.f_model_2, q4.df_model_2, z_list, n, x)
     klist2 = [i for i in range(len(res_m2))]
-    plt.loglog(klist2, res_m2, color="r")
+    plt.plot(klist2, res_m2, color="r")
     plt.xlabel("k")
     plt.ylabel("f(xk)")
     plt.legend(["BFGS", "Fletcher Reeves"])
