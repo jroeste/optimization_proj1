@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import q4 as q4
+import Task3 as Task3
 
 def backtrackingLinesearch(f, df, z_list, n, p, x):
     alpha0 = 1
@@ -57,8 +58,8 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
     residuals.append(fk)
     dfk = df(z_list, n, xk)
     p = -dfk
-    while np.linalg.norm(dfk, 2) > 10e-8:
-        alpha = note3algoritme(f, df, z_list, n, p, xk) # Tar denne lang tid?
+    while fk >= 10e-3 and np.linalg.norm(dfk, 2) > 10e-3:
+        alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk, xk_prev = xk + alpha * p, xk
         dfkplus1 = df(z_list, n, xk)
         beta_kplus1 = np.dot(dfkplus1, dfkplus1)/np.dot(dfk, dfk)
@@ -76,7 +77,7 @@ def BFGS(f, df, z_list, n, xk):
     Hk = I
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
-    while np.linalg.norm(dfk, 2) > 10e-8:
+    while fk >= 10e-3 and np.linalg.norm(dfk, 2) > 10e-3:
         p = -Hk.dot(dfk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk_prev=xk
@@ -92,40 +93,29 @@ def BFGS(f, df, z_list, n, xk):
         residuals.append(fk)
     return xk, residuals
 
+def construct_z_elliptic(n, m, A, c, area):
+    z_list = np.random.uniform(-area, area, (m, n + 1))
+    for i in range(m):
+        z_list[i][0] = 1
+        if q4.compute_r_i_1(z_list[i], A, c) >= 1:
+            z_list[i][0] = -1
+    return z_list
+
 def plot1(n, x, m):
+    A, c=q4.construct_A_and_C(n,x)
     for times in range(100):
-        A, c=q4.construct_A_and_C(n,x)
-        z_list = np.random.uniform(-area, area, (m, n + 1))
-        for i in range(m):
-            z_list[i][0] = 1
-            if q4.compute_r_i_1(z_list[i],A,c) >= 1:
-                z_list[i][0] = -1
-        firstPlot(BFGS, z_list, n, x)
-        #firstPlotTogether(BFGS, fletcherReeves, z_list, n, x)
-
-def firstPlot(method, z_list, n, x):
-    x_m2, res_m2 = method(q4.f_model_1, q4.df_model_1, z_list, n, x)
-    klist2 = [i for i in range(len(res_m2))]
-    plt.plot(klist2, res_m2)
+        #z_list = construct_z_elliptic(n, m, A, c, area)
+        #z_list = Task3.classify_by_rectangle(m, n, area, 1, 4)
+        #z_list = Task3.classify_misclassification(m, n, area, 0.05)
+        x_m2, res_m2 = BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x)
+        klist = [i for i in range(len(res_m2))]
+        plt.plot(klist, res_m2)
     plt.xlabel("k")
     plt.ylabel("f(xk)")
-    plt.title("BFGS, Model 1, m = 100")
-
-def firstPlotTogether(method1, method2, z_list, n, x):
-    x_m1, res_m1 = method1(q4.f_model_2, q4.df_model_2, z_list, n, x)
-    klist1 = [i for i in range(len(res_m1))]
-    plt.plot(klist1, res_m1, color="b")
-    x_m2, res_m2 = method2(q4.f_model_2, q4.df_model_2, z_list, n, x)
-    klist2 = [i for i in range(len(res_m2))]
-    plt.plot(klist2, res_m2, color="r")
-    plt.xlabel("k")
-    plt.ylabel("f(xk)")
-    plt.legend(["BFGS", "Fletcher Reeves"])
-    plt.title("Model 2, m = 100")
-
+    plt.title("BGFS, Model 2")
 
 def otherPlot(n, x):
-    mvalues = [i for i in range(1, 20, 2)] + [i for i in range(20, 50, 5)] + [i for i in range(50, 100, 10)] + [i for i in range(150, 551, 100)]
+    mvalues = [i for i in range(1, 20, 4)] + [i for i in range(20, 50, 10)] + [i for i in range(50, 100, 25)] + [i for i in range(150, 551, 100)]
     print(mvalues)
     w = len(mvalues)
     print("Antall mvalues:", w)
@@ -134,19 +124,18 @@ def otherPlot(n, x):
     iterations_BFGS_m1 = [0] * w
     iterations_BFGS_m2 = [0] * w
     A, c = q4.construct_A_and_C(n,x)
-    simulations = 100
+    simulations = 50
     for times in range(simulations):
+        print("Round", times+1)
         for i in range(w):
-            z_list = np.random.uniform(-area, area, (mvalues[i], n + 1))
-            for j in range(mvalues[i]):
-                z_list[j][0] = 1
-                if q4.compute_r_i_1(z_list[j], A, c) >= 1: # Inside ellipse
-                    z_list[j][0] = -1
+            #z_list = construct_z_elliptic(n, m, A, c, area)
+            z_list = Task3.classify_by_rectangle(m, n, area, 1, 4)
+            #z_list = Task3.classify_misclassification(m, n, area, 0.05)
             iterations_fr_m1[i] += len(fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x)[1])-1
             iterations_fr_m2[i] += len(fletcherReeves(q4.f_model_2, q4.df_model_2, z_list, n, x)[1])-1
             iterations_BFGS_m1[i] += len(BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x)[1]) - 1
             iterations_BFGS_m2[i] += len(BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x)[1]) - 1
-#            print("Points:", i + 1, "Iterations_BFGS_m1:", iterations_BFGS_m1[i], "Iterations_BFGS_m2:", iterations_BFGS_m2[i])
+#            print("Points:", mvalues[i], "Iterations_BFGS_m1:", iterations_BFGS_m1[i], "Iterations_BFGS_m2:", iterations_BFGS_m2[i])
     iterations_fr_m1[:] = [elem/simulations for elem in iterations_fr_m1]
     iterations_fr_m2[:] = [elem / simulations for elem in iterations_fr_m2]
     iterations_BFGS_m1[:] = [elem / simulations for elem in iterations_BFGS_m1]
@@ -158,7 +147,7 @@ def otherPlot(n, x):
     plt.legend(["F-R Model 1", "F-R Model 2", "BFGS Model 1", "BFGS Model 2"])
     plt.xlabel("Points (m)")
     plt.ylabel("Iterations")
-    plt.title("Fletcher Reeves")
+    plt.title("Rectangle")
 
 def otherPlot_BFGS():
     n = 2
@@ -193,7 +182,7 @@ def otherPlot_BFGS():
 
 if __name__ == "__main__":
     n = 2
-    m = 1000  # number of z points
+    m = 100  # number of z points
     x = np.ones(int(n * (n + 1) / 2) + n)
     x[1] = 0
     x[3] = 0
