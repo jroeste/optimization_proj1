@@ -12,8 +12,8 @@ def eval_func_model_2_2D(X,Y,A,b):
     return A[0][0]*X**2+2*A[0][1]*X*Y+A[1][1]*Y**2+b[0]*X+b[1]*Y
 
 def classify_by_ellipse(m,n,area):
-    a00=np.random.uniform(0,1)
-    a11=np.random.uniform(0,1)
+    a00=np.random.uniform(0,2)
+    a11=np.random.uniform(0,2)
     minval=min(a00,a11)
     a01=np.random.uniform(0,minval)
     A = [[a00,a01], [a01, a11]]  #symmetric, positive definite A
@@ -118,7 +118,7 @@ def create_easy_z_list(m,n):
 
 if __name__=='__main__':
     '''Constants:'''
-    m=20
+    m=50
     n=2
     area=2.0
     x_length=int(n*(n+1)/2)+n
@@ -128,38 +128,38 @@ if __name__=='__main__':
 
     x_initial = np.zeros(x_length)
     x_initial[0], x_initial[2] = 1, 1
+    x_initial=np.ones(x_length)
 
     '''Create dataset'''
-    title_1B = "Classify by ellipse - BFGS"
-    title_1F = "Classify by ellipse - FR"
-    title_2B = "Classify by rectangle - BFGS"
-    title_2F = "Classify by rectangle - FR"
-    title_3B = "Classify with error - BFGS"
-    title_3F = "Classify with error - FR"
+    title_1B = "Classify by ellipse - BFGS - m = "+str(m)
+    title_1F = "Classify by ellipse - FR - m = "+str(m)
+    title_2B = "Classify by rectangle - BFGS - m = "+str(m)
+    title_2F = "Classify by rectangle - FR - m = "+str(m)
+    title_3B = "Classify with error 5 % - BFGS - m = "+str(m)
+    title_3F = "Classify with error 5 % - FR - m = "+str(m)
 
     #z_list = classify_by_ellipse(m, n, area)
-    #z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
-    z_list=classify_misclassification(m,n,area,prob)
+    z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
+    #z_list=classify_misclassification(m,n,area,prob)
 
 
     #z_list=create_easy_z_list(m,n)
 
     #Model 1:
-    x_vector_model_1 = q5.fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)
-    print(x_vector_model_1[1])
+    x_vector_model_1 = q5.BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)
+
     A1,c1=q4.construct_A_and_C(n,x_vector_model_1[0])
     X1,Y1,Z1=make_ellipse(A1,c1,area,eval_func_model_1_2D)
     plot_dataset_2d(X1, Y1, Z1,'solid')
 
     #Model 2:
-    x_vector_model_2 = q5.fletcherReeves(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)
-    print(x_vector_model_2[1])
+    x_vector_model_2 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)
+
     A2,c2=q4.construct_A_and_C(n,x_vector_model_2[0])
     X2,Y2,Z2=make_ellipse(A2,c2,area,eval_func_model_2_2D)
     plot_dataset_2d(X2,Y2,Z2,'dashed')
-    plot_z_points(z_list,title_3F)
+    plot_z_points(z_list,title_2B)
     plt.grid()
     plt.show()
-    print("A1,c1: ",A1,c1)
-    print("A2,c2: ",A2,c2)
+
 
