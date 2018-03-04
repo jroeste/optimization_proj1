@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Task3.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Task3.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Task3.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+            <state relative-caret-position="254">
+              <caret line="140" column="40" lean-forward="false" selection-start-line="140" selection-start-column="40" selection-end-line="140" selection-end-column="40" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
                 <element signature="e#1804#2460#0" expanded="false" />
@@ -32,19 +32,21 @@
       <file leaf-file-name="q4.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/q4.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="138" column="10" lean-forward="false" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="10" />
+            <state relative-caret-position="509">
+              <caret line="133" column="25" lean-forward="true" selection-start-line="133" selection-start-column="25" selection-end-line="133" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="q5.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="q5.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/q5.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12">
-              <caret line="130" column="31" lean-forward="true" selection-start-line="130" selection-start-column="31" selection-end-line="130" selection-end-column="31" />
-              <folding />
+            <state relative-caret-position="1291">
+              <caret line="187" column="25" lean-forward="false" selection-start-line="187" selection-start-column="25" selection-end-line="187" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -277,7 +279,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
           <caret line="93" column="18" lean-forward="false" selection-start-line="93" selection-start-column="18" selection-end-line="93" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -304,7 +308,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1530">
           <caret line="93" column="18" lean-forward="true" selection-start-line="93" selection-start-column="18" selection-end-line="93" selection-end-column="18" />
-          <folding />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -312,14 +318,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/q4.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="138" column="10" lean-forward="false" selection-start-line="138" selection-start-column="5" selection-end-line="138" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -331,22 +329,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Task3.py">
+    <entry file="file://$PROJECT_DIR$/q4.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <element signature="e#1804#2460#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="509">
+          <caret line="133" column="25" lean-forward="true" selection-start-line="133" selection-start-column="25" selection-end-line="133" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/q5.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
-          <caret line="130" column="31" lean-forward="true" selection-start-line="130" selection-start-column="31" selection-end-line="130" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="1291">
+          <caret line="187" column="25" lean-forward="false" selection-start-line="187" selection-start-column="25" selection-end-line="187" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Task3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="140" column="40" lean-forward="false" selection-start-line="140" selection-start-column="40" selection-end-line="140" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#1804#2460#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

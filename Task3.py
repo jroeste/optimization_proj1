@@ -138,7 +138,7 @@ if __name__=='__main__':
     title_3F = "Classify with error - FR"
 
     z_list = classify_by_ellipse(m, n, area)
-    # z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
+    #z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
     #z_list=classify_misclassification(m,n,area,prob)
 
 
