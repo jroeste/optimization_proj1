@@ -70,6 +70,7 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
         fk = f(z_list, n, xk)
         residuals.append(fk)
         iter+=1
+    #print(fk)
     return xk, residuals
 
 # A Quasi-Newton Method
@@ -100,6 +101,7 @@ def BFGS(f, df, z_list, n, xk):
         iter+=1
         if iter>maxiter:
             stop=True
+    #print(fk)
     return xk, residuals
 
 def construct_z_elliptic(n, m, A, c, area):
@@ -143,7 +145,7 @@ def otherPlot(n, x):
         for i in range(w):
             #z_list = construct_z_elliptic(n, mvalues[i], A, c, area)
             #z_list = Task3.classify_by_rectangle(mvalues[i], n, area, 1, 4)
-            z_list = Task3.classify_misclassification(mvalues[i], n, area, 0.01)
+            z_list = Task3.classify_misclassification(mvalues[i], n, area, 0.05)
 
             iterations_fr_m1[i] += len(fletcherReeves(q4.f_model_1, q4.df_model_1, z_list, n, x)[1])-1
             iterations_fr_m2[i] += len(fletcherReeves(q4.f_model_2, q4.df_model_2, z_list, n, x)[1])-1
