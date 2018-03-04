@@ -82,10 +82,9 @@ def plot_rectangle_and_points(m,n,area,rec):
     ax1.axis([-area, area + 0.01, -area, area + 0.01])
     plt.show()
 
-def plot_dataset_2d(X,Y,Z):
-    CS = plt.contour(X, Y, Z, [1])
+def plot_dataset_2d(X,Y,Z,col):
+    CS = plt.contour(X, Y, Z, [1],linestyles=col)
     plt.clabel(CS, inline=1, fontsize=10)
-    plt.grid()
 
 def plot_z_points(z):
     for i in range(m):
@@ -104,13 +103,24 @@ def make_ellipse(A,c,area,func):
     return X,Y,Z
 
 
+def create_easy_z_list(m,n):
+    z_list = np.zeros((m,n+1))
+    z_list[0][0]=1
+    z_list[0][1]=0
+    z_list[0][2]=0
+    z_list[1][0]=-1
+    z_list[1][1]=1
+    z_list[1][2]=0
+    print(z_list)
+    return z_list
+
 if __name__=='__main__':
     '''Constants:'''
-    m=1000
+    m=2
     n=2
-    area=5.0
+    area=2.0
     x_length=int(n*(n+1)/2)+n
-    prob=0.01
+    prob=0.5
     min_rec,max_rec=1,4
     '''Initials'''
 
@@ -120,16 +130,25 @@ if __name__=='__main__':
     '''Create dataset'''
 
     #z_list=classify_misclassification(m,n,area,prob)
-    z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
+    #z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
     #z_list = classify_by_ellipse(m, n, area)
+    z_list=create_easy_z_list(m,n)
 
+    #Model 1:
     x_vector_model_1 = q5.BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)[0]
-    x_vector_model_2 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)[0]
     A1,c1=q4.construct_A_and_C(n,x_vector_model_1)
     X1,Y1,Z1=make_ellipse(A1,c1,area,eval_func_model_1_2D)
+    plot_dataset_2d(X1, Y1, Z1,'solid')
+
+    #Model 2:
+    x_vector_model_2 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)[0]
     A2,c2=q4.construct_A_and_C(n,x_vector_model_2)
     X2,Y2,Z2=make_ellipse(A2,c2,area,eval_func_model_2_2D)
-    plot_dataset_2d(X1,Y1,Z1)
-    plot_dataset_2d(X2,Y2,Z2)
+    plot_dataset_2d(X2,Y2,Z2,'dashed')
     plot_z_points(z_list)
+    plt.grid()
     plt.show()
+    print("A1,c1: ",A1,c1)
+    print("A2,c2: ",A2,c2)
+
+
