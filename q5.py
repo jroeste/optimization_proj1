@@ -134,7 +134,7 @@ def otherPlot(n, x):
     iterations_BFGS_m1 = [0] * w
     iterations_BFGS_m2 = [0] * w
     A, c = q4.construct_A_and_C(n,x)
-    simulations = 100
+    simulations = 2
     for times in range(simulations):
         for i in range(w):
             z_list = np.random.uniform(-area, area, (mvalues[i], n + 1))
@@ -146,7 +146,7 @@ def otherPlot(n, x):
             iterations_fr_m2[i] += len(fletcherReeves(q4.f_model_2, q4.df_model_2, z_list, n, x)[1])-1
             iterations_BFGS_m1[i] += len(BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x)[1]) - 1
             iterations_BFGS_m2[i] += len(BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x)[1]) - 1
-#            print("Points:", i + 1, "Iterations_BFGS_m1:", iterations_BFGS_m1[i], "Iterations_BFGS_m2:", iterations_BFGS_m2[i])
+            print("Points:", i + 1, "Iterations_BFGS_m1:", iterations_BFGS_m1[i], "Iterations_BFGS_m2:", iterations_BFGS_m2[i])
     iterations_fr_m1[:] = [elem/simulations for elem in iterations_fr_m1]
     iterations_fr_m2[:] = [elem / simulations for elem in iterations_fr_m2]
     iterations_BFGS_m1[:] = [elem / simulations for elem in iterations_BFGS_m1]

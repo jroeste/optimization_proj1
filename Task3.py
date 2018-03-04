@@ -14,6 +14,7 @@ def eval_func_model_2_2D(X,Y,A,b):
 def classify_by_ellipse(m,n,area):
     a00=np.random.uniform(0,1)
     a11=np.random.uniform(0,1)
+
     a01=np.random.uniform(0,min(a00,a11))
     A = [[a00,a01], [a01, a11]]  #symmetric, positive definite A
     c = np.random.uniform(-1, 1, n) #random vector
@@ -86,18 +87,19 @@ def plot_dataset_2d(X,Y,Z,col):
     CS = plt.contour(X, Y, Z, [1],linestyles=col)
     plt.clabel(CS, inline=1, fontsize=10)
 
-def plot_z_points(z):
+def plot_z_points(z,title):
     for i in range(m):
         if z[i][0]<0:
             col='green'
         else:
             col='red'
         plt.plot(z[i][1], z[i][2], 'o', color=col)
+    plt.title(title)
 
 def make_ellipse(A,c,area,func):
     delta = 0.01
-    x = np.arange(-area*1.1, 1.1*area+delta, delta)
-    y = np.arange(-area*1.1, 1.1*area+delta, delta)
+    x = np.arange(-area*1.5, 1.5*area+delta, delta)
+    y = np.arange(-area*1.5, 1.5*area+delta, delta)
     X, Y = np.meshgrid(x, y)
     Z=func(X, Y, A, c)
     return X,Y,Z
@@ -116,11 +118,11 @@ def create_easy_z_list(m,n):
 
 if __name__=='__main__':
     '''Constants:'''
-    m=2
+    m=500
     n=2
     area=2.0
     x_length=int(n*(n+1)/2)+n
-    prob=0.5
+    prob=0.2
     min_rec,max_rec=1,4
     '''Initials'''
 
@@ -128,11 +130,19 @@ if __name__=='__main__':
     x_initial[0], x_initial[2] = 1, 1
 
     '''Create dataset'''
+    title_1B = "Classify by ellipse - BFGS"
+    title_1F = "Classify by ellipse - FR"
+    title_2B = "Classify by rectangle - BFGS"
+    title_2F = "Classify by rectangle - FR"
+    title_3B = "Classify with error - BFGS"
+    title_3F = "Classify with error - FR"
 
+    z_list = classify_by_ellipse(m, n, area)
+    # z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
     #z_list=classify_misclassification(m,n,area,prob)
-    #z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
-    #z_list = classify_by_ellipse(m, n, area)
-    z_list=create_easy_z_list(m,n)
+
+
+    #z_list=create_easy_z_list(m,n)
 
     #Model 1:
     x_vector_model_1 = q5.BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)[0]
@@ -145,7 +155,7 @@ if __name__=='__main__':
     A2,c2=q4.construct_A_and_C(n,x_vector_model_2)
     X2,Y2,Z2=make_ellipse(A2,c2,area,eval_func_model_2_2D)
     plot_dataset_2d(X2,Y2,Z2,'dashed')
-    plot_z_points(z_list)
+    plot_z_points(z_list,title_1B)
     plt.grid()
     plt.show()
     print("A1,c1: ",A1,c1)
