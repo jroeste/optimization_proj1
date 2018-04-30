@@ -57,6 +57,7 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
     residuals.append(fk)
     dfk = df(z_list, n, xk)
     p = -dfk
+    teller=0
     while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
         alpha = note3algoritme(f, df, z_list, n, p, xk) # Tar denne lang tid?
         xk, xk_prev = xk + alpha * p, xk
@@ -66,6 +67,9 @@ def fletcherReeves(f, df, z_list, n, xk): # Nonlinear Conjugate Gradient
         dfk = dfkplus1
         fk = f(z_list, n, xk)
         residuals.append(fk)
+        teller+=1
+        if teller%5==0:
+            print(teller)
     return xk, residuals
 
 # A Quasi-Newton Method
@@ -77,7 +81,7 @@ def BFGS(f, df, z_list, n, xk):
     fk = f(z_list, n, xk)
     dfk = df(z_list, n, xk)
     counter=0
-    while fk > 10e-4 and np.linalg.norm(dfk, 2) > 10e-6:
+    while fk > 10e-2 and np.linalg.norm(dfk, 2) > 10e-6:
         p = -Hk.dot(dfk)
         alpha = note3algoritme(f, df, z_list, n, p, xk)
         xk_prev=xk
@@ -206,4 +210,4 @@ if __name__ == "__main__":
     print("plotting ;)")
     plt.show()
 
-    #otherPlot_BFGS()
+    otherPlot_BFGS()

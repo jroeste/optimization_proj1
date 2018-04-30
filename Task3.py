@@ -83,7 +83,7 @@ def plot_rectangle_and_points(m,n,area,rec):
     plt.show()
 
 def plot_dataset_2d(X,Y,Z):
-    CS = plt.contour(X, Y, Z, [1])
+    CS = plt.contour(X, Y, Z,[1])
     plt.clabel(CS, inline=1, fontsize=10)
     plt.grid()
 
@@ -97,8 +97,8 @@ def plot_z_points(z):
 
 def make_ellipse(A,c,area,func):
     delta = 0.01
-    x = np.arange(-area*1.1, 1.1*area+delta, delta)
-    y = np.arange(-area*1.1, 1.1*area+delta, delta)
+    x = np.arange(-area*1.2, 1.2*area+delta, delta)
+    y = np.arange(-area*1.2, 1.2*area+delta, delta)
     X, Y = np.meshgrid(x, y)
     Z=func(X, Y, A, c)
     return X,Y,Z
@@ -110,26 +110,26 @@ if __name__=='__main__':
     n=2
     area=5.0
     x_length=int(n*(n+1)/2)+n
-    prob=0.01
+    prob=0.05
     min_rec,max_rec=1,4
     '''Initials'''
 
     x_initial = np.zeros(x_length)
     x_initial[0], x_initial[2] = 1, 1
-
+    #x_initial=np.ones(5)
     '''Create dataset'''
 
-    #z_list=classify_misclassification(m,n,area,prob)
-    z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
+    z_list=classify_misclassification(m,n,area,prob)
+    #z_list = classify_by_rectangle(m, n, area, min_rec,max_rec)
     #z_list = classify_by_ellipse(m, n, area)
 
-    x_vector_model_1 = q5.BFGS(q4.f_model_1, q4.df_model_1, z_list, n, x_initial)[0]
-    x_vector_model_2 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)[0]
+    x_vector_model_1 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)[0]
+    #x_vector_model_2 = q5.BFGS(q4.f_model_2, q4.df_model_2, z_list, n, x_initial)[0]
     A1,c1=q4.construct_A_and_C(n,x_vector_model_1)
     X1,Y1,Z1=make_ellipse(A1,c1,area,eval_func_model_1_2D)
-    A2,c2=q4.construct_A_and_C(n,x_vector_model_2)
-    X2,Y2,Z2=make_ellipse(A2,c2,area,eval_func_model_2_2D)
+    #A2,c2=q4.construct_A_and_C(n,x_vector_model_2)
+    #X2,Y2,Z2=make_ellipse(A2,c2,area,eval_func_model_2_2D)
     plot_dataset_2d(X1,Y1,Z1)
-    plot_dataset_2d(X2,Y2,Z2)
+    #plot_dataset_2d(X2,Y2,Z2)
     plot_z_points(z_list)
     plt.show()

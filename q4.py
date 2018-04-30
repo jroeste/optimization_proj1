@@ -118,7 +118,7 @@ if __name__ == "__main__":  # Her har Even vært og endret ting 26.02
     n = 3
     N = int(n*(n+1)/2+n)
     m=10
-    test_derivatives(m,n,N,f_model_2,df_model_2)
+    test_derivatives(m,n,N,f_model_1,df_model_1)
 
     #Noke du vil ha her Even?
 
